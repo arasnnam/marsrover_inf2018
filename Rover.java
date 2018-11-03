@@ -197,7 +197,6 @@ public class Rover extends Actor
         setImage("images/rover.png");
         world = getWorld();
         anzeige = new Display();
-        anzeige.setImage("images/nachricht.png");
         world.addObject(anzeige, 7, 0);
         if(getY()==0)
         {
@@ -213,7 +212,7 @@ public class Rover extends Actor
 
         public Display()
         {
-          bild = getImage();
+            bild = getImage();
         }
 
         public void act() 
@@ -223,8 +222,9 @@ public class Rover extends Actor
 
         public void anzeigen(String pText)
         {
-           loeschen();
-           getImage().drawImage(new GreenfootImage(pText, 25, Color.BLACK, new Color(0, 0, 0, 0)),10,10);
+            loeschen();
+            bild = new GreenfootImage(pText, 30, null, null); 
+            getImage().drawImage(bild, 8,0);
 
         }
 

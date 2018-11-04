@@ -7,8 +7,119 @@ public class Rover extends Actor
     public void act() 
     {
 
-    } 
+        drehe("rechts");
+        drehe("rechts");
+        fahre();
+        fahre();
+        drehe("links");
+        while(linieVorhanden())
+        {
+            fahre();
+        }
+        
+            for(int s=0; s<67 ;s++)
+            {
 
+                fahren();
+            }
+        
+        fahre();
+        drehe("links");
+        fahre();
+        entferneHuegel();
+        fahre();
+        aufnahmeBohrer();
+
+        drehe("rechts");
+        drehe("rechts");
+        fahre();
+        for(int s=0; s<67 ;s++)
+        {
+
+            fahrenZurueck();
+        }
+        drehe("links");
+        fahre();
+        fahre();
+        fahre();
+
+        drehe("rechts");
+        fahre();
+        fahre();
+        fahre();
+        setzeRover();
+        fahre();
+
+    }
+
+    public void setzeRover()
+    {
+        getWorld().addObject(new Bohrer(), getX(), getY());    
+    }
+
+    public void entferneHuegel()
+    {
+
+        removeTouching(Huegel.class);
+    }
+    public void aufnahmeBohrer()
+    {
+
+        removeTouching(Bohrer.class);
+    }
+    public void fahren()
+    {
+        if(!huegelVorhanden("rechts"))
+        {drehe("rechts");
+            fahre();
+        }
+        else
+        {
+            if(!huegelVorhanden("vorne"))
+
+            {
+
+                fahre();
+            }
+        }
+        if (huegelVorhanden("vorne")&&huegelVorhanden("links"))
+        {
+            drehe("rechts");
+            fahre();}
+        if(huegelVorhanden("vorne")&&huegelVorhanden("rechts"))
+        {
+            drehe("links");
+            fahre();
+        }
+
+    }
+
+    public void fahrenZurueck()
+    {
+        if(!huegelVorhanden("links"))
+        {drehe("links");
+            fahre();
+        }
+        else
+        {
+            if(!huegelVorhanden("vorne"))
+
+            {
+
+                fahre();
+            }
+        }
+        if (huegelVorhanden("vorne")&&huegelVorhanden("links"))
+        {
+            drehe("rechts");
+            fahre();}
+        if(huegelVorhanden("vorne")&&huegelVorhanden("rechts"))
+        {
+            drehe("links");
+            fahre();
+        }
+
+    }
 
     /**
      * Der Rover bewegt sich ein Feld in Fahrtrichtung weiter.
@@ -20,11 +131,7 @@ public class Rover extends Actor
         int posX = getX();
         int posY = getY();
 
-        if(huegelVorhanden("vorne"))
-        {
-            nachricht("Zu steil!");
-        }
-        else if(getRotation()==270 && getY()==1)
+        if(getRotation()==270 && getY()==1)
         {
             nachricht("Ich kann mich nicht bewegen");
         }
@@ -135,14 +242,11 @@ public class Rover extends Actor
     {
         if(gesteinVorhanden())
         {
-            nachricht("Gestein untersucht! Wassergehalt ist " + ((Gestein)getOneIntersectingObject(Gestein.class)).getWassergehalt()+"%.");
+            nachricht("Gestein untersucht! Wassergehalt und Stoffzugabe ist " + ((Gestein)getOneIntersectingObject(Gestein.class)).getWassergehalt()+"%.");
             Greenfoot.delay(1);
             removeTouching(Gestein.class);
         }
-        else 
-        {
-            nachricht("Hier ist kein Gestein");
-        }
+
     }
 
     /**
@@ -153,10 +257,22 @@ public class Rover extends Actor
         getWorld().addObject(new Marke(), getX(), getY());
     }
 
+
     /**
      * *Der Rover gibt durch einen Wahrheitswert (true oder false )zurück, ob sich auf seiner Position ein Objekt der Marke befindet.
      * Eine entsprechende Meldung erscheint auch auf dem Display.
      */
+
+    public boolean linieVorhanden()
+    {
+        if(getOneIntersectingObject(Linie.class)!=null)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean markeVorhanden()
     {
         if(getOneIntersectingObject(Marke.class)!=null)
@@ -194,7 +310,7 @@ public class Rover extends Actor
     protected void addedToWorld(World world)
     {
 
-        setImage("images/rover.png");
+        setImage("images/Bohrer.png");
         world = getWorld();
         anzeige = new Display();
         world.addObject(anzeige, 7, 0);
